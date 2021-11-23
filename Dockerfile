@@ -1,5 +1,7 @@
 FROM openjdk:11-jdk-slim
-ARG JAR_FILE=target/*.jar
-COPY ${JAR_FILE} app.jar
-ENTRYPOINT ["java","-jar","/app.jar"]
+WORKDIR /likes-ms
+COPY . .
+RUN ["ls"]
+RUN ./mvnw clean package
+ENTRYPOINT ["java","-jar","./target/likes-ms-jar.jar"]
 CMD gunicorn --bind 0.0.0.0:$PORT wsgi
